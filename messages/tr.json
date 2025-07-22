@@ -1,4 +1,165 @@
 {
-	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"hello_world": "Hello, {name} from tr!"
+  "nav": {
+    "home": "Ana Sayfa",
+    "upcycling": "Upcycling"
+  },
+  "hero": {
+    "title": "BEBEK RESORT",
+    "subtitle": "KARAVANLAR LÜKS İLE BULUŞUYOR",
+    "primaryBtn": "Odaları Keşfet",
+    "secondaryBtn": "Rezervasyon Yap"
+  },
+  "stats": {
+    "wonder": "METREKARE",
+    "rooms": "ODA",
+    "memories": "SONSUZ ANI"
+  },
+  "about": {
+    "title": "BEKLENMEDİK OLANI KEŞFEDİN",
+    "description": "Kaz Dağları'nın eteklerinde, yüksek konumu ve Midilli Adası'nın deniz manzarası ile, Kozlu köyünün merkezinde yer alan upcycling temalı Bebek Resort, bir bebek kadar küçük. Sadece 97.5 metrekare! Bu küçük alan ziyaret etmeye değer, çünkü bir mahallede mi, otelde mi, kafede mi yoksa bistrode mi, müzede mi yoksa otoparkta mı, kruvaziyer gemisinde mi yoksa karavanda mı, yoksa geçmişte mi yoksa şimdide mi olduğunuzu merak ettirecek!",
+    "features": {
+      "mountain": {
+        "title": "Dağ Manzarası",
+        "description": "Nefes kesen Kaz Dağları panoraması"
+      },
+      "sea": {
+        "title": "Deniz Erişimi",
+        "description": "Ege'nin berrak sularına doğrudan erişim"
+      },
+      "historic": {
+        "title": "Tarihi Mekan",
+        "description": "Antik Assos taş mimarisi"
+      }
+    }
+  },
+  "features": {
+    "title": "OLAĞANÜSTÜ KONAKLAMA",
+    "caravans": {
+      "title": "KARAVANLAR",
+      "description": "Nostalji ile lüks konforun unutulmaz bir deneyimde buluştuğu, rahat ve benzersiz konaklama alanlarına dönüştürülmüş yeniden kullanılmış karavanların cazibesini yaşayın."
+    },
+    "caravanRoom": {
+      "title": "KARAVAN ODASI",
+      "description": "Nostalji ile modern konforu birleştiren, rahat ve benzersiz bir konaklama alanına dönüştürülmüş bir karavanın cazibesini yaşayın."
+    },
+    "historicCharm": {
+      "title": "TARİHİ CAZİBE",
+      "description": "Bir taş ustası, harap olmuş bir taş evden taşları (Assos taşı) kullanarak çevre duvarı inşa etti, antik zanaatkarlık çağdaş tasarımla buluşuyor."
+    }
+  },
+  "gallery": {
+    "title": "Mekanlarımız",
+    "subtitle": "Her özenle tasarlanmış mekanın benzersiz karakterini keşfedin"
+  },
+  "contact": {
+    "title": "Kaçamağınızı Rezerve Edin",
+    "subtitle": "Olağanüstü bir şey deneyimlemeye hazır mısınız?",
+    "visit": {
+      "title": "Bizi Ziyaret Edin",
+      "address": "Bebek Resort",
+      "location": "Kozlu Köyü, Ayvacık",
+      "postal": "17862 Çanakkale, Türkiye"
+    },
+    "email": {
+      "title": "İletişime Geçin",
+      "address": "info@bebekresort.com.tr"
+    },
+    "visual": {
+      "title": "Cennetiniz Sizi Bekliyor",
+      "subtitle": "Anıların yaratıldığı yer"
+    }
+  },
+  "footer": {
+    "description": "Sürdürülebilir tasarım ve upcycled sanat aracılığıyla yeniden hayal edilen lüksü deneyimleyin.",
+    "navigation": "Navigasyon",
+    "contact": "İletişim",
+    "followUs": "Bizi Takip Edin",
+    "copyright": "© {year} Bebek Resort. Tüm hakları saklıdır.",
+    "developedBy": "Geliştiren"
+  },
+  "upcycling": {
+    "hero": {
+      "title": "UPCYCLING",
+      "subtitle": "SIRADAN OLANI OLAĞANÜSTÜYE DÖNÜŞTÜRMEK",
+      "primaryBtn": "Dönüşümleri Keşfet"
+    },
+    "concept": {
+      "title": "UPCYCLING KONSEPTİ",
+      "subtitle": "SIRADAN OLANI OLAĞANÜSTÜYE DÖNÜŞTÜRMEK",
+      "description": "Bebek Resort'ta, her nesnenin bir hikayesi ve dönüşüm potansiyeli olduğuna inanıyoruz. Upcycling felsefemiz basit geri dönüşümün ötesine geçiyor - atık malzemelere yeni hayat veriyor, yenilik ve yaratıcılık hikayeleri anlatan benzersiz ve sürdürülebilir alanlar yaratıyoruz.",
+      "benefits": {
+        "sustainable": {
+          "title": "SÜRDÜRÜLEBİLİR TASARIM",
+          "description": "Malzemelerin yaratıcı yeniden kullanımı ve yenilikçi tasarım çözümleri ile çevresel etkiyi azaltmak.",
+          "stat": "85%",
+          "label": "YENİDEN KULLANILAN MALZEME"
+        },
+        "creative": {
+          "title": "YARATICI YENİLİK",
+          "description": "Sanatsal vizyon ve zanaatkarlık ile günlük nesneleri olağanüstü tasarım öğelerine dönüştürmek.",
+          "stat": "25+",
+          "label": "BENZERSİZ PARÇA"
+        },
+        "valuable": {
+          "title": "DEĞER YARATMA",
+          "description": "Aksi takdirde atılacak veya unutulacak malzemelere yeni değer ve amaç katmak.",
+          "stat": "100%",
+          "label": "SIFIR ATIK"
+        }
+      }
+    },
+    "gallery": {
+      "title": "DÖNÜŞÜMLER"
+    },
+    "process": {
+      "title": "SÜRECİMİZ",
+      "steps": {
+        "discovery": {
+          "title": "KEŞİF",
+          "description": "Vintage karavanlardan endüstriyel ekipmanlara kadar, dönüşüm potansiyeli olan benzersiz malzemeler ve nesneler arıyoruz."
+        },
+        "vision": {
+          "title": "VİZYON",
+          "description": "Tasarım ekibimiz yeni olasılıklar hayal ediyor, her nesnenin nasıl dönüştürülebileceği için detaylı planlar oluşturuyor."
+        },
+        "craftsmanship": {
+          "title": "ZANAATKARLIK",
+          "description": "Usta zanaatkarlar malzemeleri dikkatle restore ediyor ve dönüştürüyor, karakterlerini korurken yeni işlevsellik ekliyor."
+        },
+        "integration": {
+          "title": "ENTEGRASYON",
+          "description": "Dönüştürülmüş parçalar alanlarımıza düşünceli bir şekilde entegre ediliyor, uyumlu ve işlevsel ortamlar yaratıyor."
+        }
+      }
+    },
+    "benefits": {
+      "title": "FAYDALAR",
+      "environmental": {
+        "title": "ÇEVRESEL",
+        "description": "Sürdürülebilir malzeme yeniden kullanımı ve yenilikçi tasarım uygulamaları ile atık ve karbon ayak izini azaltmak.",
+        "stat": "85% DAHA AZ ATIK"
+      },
+      "creativity": {
+        "title": "YARATICILIK",
+        "description": "Benzersiz tasarım zorlukları ve malzeme kısıtlamaları ile sanatsal ifadeyi ve yenilikçi düşünmeyi teşvik etmek.",
+        "stat": "25+ BENZERSİZ TASARIM"
+      },
+      "economic": {
+        "title": "EKONOMİK",
+        "description": "Atık malzemelerden değer yaratırken yerel zanaatkarlığı ve sürdürülebilir iş uygulamalarını desteklemek.",
+        "stat": "40% MALİYET TASARRUFU"
+      }
+    },
+    "stats": {
+      "transformed": "DÖNÜŞTÜRÜLEN NESNE",
+      "history": "YILLIK TARİH",
+      "sustainable": "SÜRDÜRÜLEBİLİR",
+      "stories": "ANLATILACAK HİKAYE"
+    },
+    "cta": {
+      "title": "UPCYCLING'İ DENEYİMLEYİN",
+      "description": "Sıradan malzemeleri olağanüstü deneyimlere nasıl dönüştürdüğümüzü keşfedin. Konaklamanızı rezerve edin ve sürdürülebilir lüksün büyüsünü görün.",
+      "bookStay": "KONAKLAMANIZI REZERVE EDİN"
+    }
+  }
 }

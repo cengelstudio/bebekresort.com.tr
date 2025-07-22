@@ -1,15 +1,17 @@
 <script lang="ts">
-  import '../app.css';
+  import '../../app.css';
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
-  import { setLocale } from '$lib/paraglide/runtime.js';
   import { fade, fly } from 'svelte/transition';
   import { get } from 'svelte/store';
+  import { tSync, setLocale, currentLocale, initLocale } from '$lib/i18n';
+
+  export let data: { locale: string; translations: any };
 
   let isLoaded = false;
   let isMenuOpen = false;
   let isLangDropdownOpen = false;
-  let currentLang = 'en';
+  $: currentLang = data.locale || 'en';
 
   const languages = [
     { code: 'en', name: 'English' },
@@ -18,15 +20,42 @@
     { code: 'es', name: 'Español' }
   ];
 
+  // Helper function to get translation from loaded data
+  function t(key: string, params?: Record<string, any>): string {
+    const keys = key.split('.');
+    let value: any = data.translations;
+
+    for (const k of keys) {
+      if (value && typeof value === 'object' && k in value) {
+        value = value[k];
+      } else {
+        return key; // Return key if translation not found
+      }
+    }
+
+    if (typeof value !== 'string') {
+      return key;
+    }
+
+    // Replace parameters
+    if (params) {
+      return value.replace(/\{(\w+)\}/g, (match: string, param: string) => {
+        return params[param] !== undefined ? String(params[param]) : match;
+      });
+    }
+
+    return value;
+  }
+
   // Hero content based on current route
   $: heroContent = {
-    title: $page.url.pathname === '/upcycling' ? 'UPCYCLING' : 'BEBEK RESORT',
-    subtitle: $page.url.pathname === '/upcycling'
-      ? 'TRANSFORMING THE ORDINARY INTO EXTRAORDINARY'
-      : 'WHERE VINTAGE MEETS LUXURY',
-    primaryBtn: $page.url.pathname === '/upcycling' ? 'Explore Transformations' : 'Explore Rooms',
-    primaryAction: () => scrollToSection('gallery'),
-    secondaryBtn: 'Book Your Stay',
+    title: $page.url.pathname.includes('/upcycling') ? t('upcycling.hero.title') : t('hero.title'),
+    subtitle: $page.url.pathname.includes('/upcycling')
+      ? t('upcycling.hero.subtitle')
+      : t('hero.subtitle'),
+    primaryBtn: $page.url.pathname.includes('/upcycling') ? t('upcycling.hero.primaryBtn') : t('hero.primaryBtn'),
+    primaryAction: () => $page.url.pathname.includes('/upcycling') ? scrollToSection('concept') : scrollToSection('gallery'),
+    secondaryBtn: t('hero.secondaryBtn'),
     secondaryAction: () => scrollToSection('contact')
   };
 
@@ -49,8 +78,10 @@
 
   function switchLanguage(lang: string) {
     console.log('Switching language to:', lang);
-    setLocale(lang as any);
-    currentLang = lang;
+    // Navigate to the new locale path
+    const currentPath = $page.url.pathname;
+    const newPath = currentPath.replace(/^\/[a-z]{2}/, `/${lang}`);
+    window.location.href = newPath;
     isLangDropdownOpen = false;
   }
 
@@ -71,6 +102,7 @@
 
   onMount(() => {
     isLoaded = true;
+    initLocale();
     document.addEventListener('click', handleClickOutside);
 
     return () => {
@@ -79,10 +111,100 @@
   });
 </script>
 
+<svelte:head>
+  <!-- Primary Meta Tags -->
+  <title>Bebek Resort - Luxury Reimagined | Upcycling Paradise in Assos</title>
+  <meta name="title" content="Bebek Resort - Luxury Reimagined | Upcycling Paradise in Assos" />
+  <meta name="description" content="Experience sustainable luxury at Bebek Resort in Assos. Discover our unique upcycling concept with vintage caravans, mountain views, and Aegean Sea access. Book your extraordinary stay today." />
+  <meta name="keywords" content="Bebek Resort, Assos, luxury hotel, upcycling, sustainable tourism, vintage caravans, Aegean Sea, Kaz Mountains, Turkey, eco-friendly accommodation" />
+  <meta name="author" content="Bebek Resort" />
+  <meta name="robots" content="index, follow" />
+  <meta name="language" content="English" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bebekresort.com.tr/" />
+  <meta property="og:title" content="Bebek Resort - Luxury Reimagined | Upcycling Paradise in Assos" />
+  <meta property="og:description" content="Experience sustainable luxury at Bebek Resort in Assos. Discover our unique upcycling concept with vintage caravans, mountain views, and Aegean Sea access." />
+  <meta property="og:image" content="https://bebekresort.com.tr/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="Bebek Resort" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://bebekresort.com.tr/" />
+  <meta property="twitter:title" content="Bebek Resort - Luxury Reimagined | Upcycling Paradise in Assos" />
+  <meta property="twitter:description" content="Experience sustainable luxury at Bebek Resort in Assos. Discover our unique upcycling concept with vintage caravans, mountain views, and Aegean Sea access." />
+  <meta property="twitter:image" content="https://bebekresort.com.tr/twitter-image.jpg" />
+  <meta property="twitter:site" content="@bebekresortassos" />
+  <meta property="twitter:creator" content="@bebekresortassos" />
+
+  <!-- Additional SEO -->
+  <link rel="canonical" href="https://bebekresort.com.tr/" />
+  <meta name="theme-color" content="#FF1E56" />
+  <meta name="msapplication-TileColor" content="#FF1E56" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Hotel",
+      "name": "Bebek Resort",
+      "description": "Sustainable luxury resort with upcycling concept in Assos, Turkey",
+      "url": "https://bebekresort.com.tr",
+      "telephone": "+90-xxx-xxx-xxxx",
+      "email": "info@bebekresort.com.tr",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Kozlu Köyü",
+        "addressLocality": "Ayvacık",
+        "addressRegion": "Çanakkale",
+        "postalCode": "17862",
+        "addressCountry": "TR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "39.4878",
+        "longitude": "26.3369"
+      },
+      "priceRange": "$$",
+      "amenityFeature": [
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Mountain View",
+          "value": true
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Sea Access",
+          "value": true
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Upcycling Design",
+          "value": true
+        }
+      ],
+      "image": [
+        "https://bebekresort.com.tr/assets/hotel-1.jpeg",
+        "https://bebekresort.com.tr/assets/minivan-2.jpeg",
+        "https://bebekresort.com.tr/assets/sea-1.jpeg"
+      ],
+      "sameAs": [
+        "https://instagram.com/bebekresortassos"
+      ]
+    }
+  </script>
+</svelte:head>
+
 <div class="app-container {isLoaded ? 'loaded' : ''}">
   <nav class="main-nav">
     <div class="nav-content">
-      <a href="/" class="logo-container">
+      <a href="/{currentLang}" class="logo-container">
         <img src="/logo-white.png" alt="Bebek Resort Logo" class="logo-img" />
       </a>
 
@@ -92,8 +214,8 @@
 
       <div class="nav-items {isMenuOpen ? 'open' : ''}">
         <div class="nav-links">
-          <a href="/" class="nav-link {$page.url.pathname === '/' ? 'active' : ''}">Home</a>
-          <a href="/upcycling" class="nav-link {$page.url.pathname === '/upcycling' ? 'active' : ''}">Upcycling</a>
+          <a href="/{currentLang}" class="nav-link {$page.url.pathname === `/${currentLang}` ? 'active' : ''}">{t('nav.home')}</a>
+          <a href="/{currentLang}/upcycling" class="nav-link {$page.url.pathname === `/${currentLang}/upcycling` ? 'active' : ''}">{t('nav.upcycling')}</a>
         </div>
 
         <div class="lang-selector">
@@ -118,23 +240,23 @@
     </div>
   </nav>
 
-  <main>
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-      <div class="hero-content" in:fade={{ duration: 1000, delay: 300 }}>
-        <h1 in:fly={{ y: 50, duration: 1000, delay: 500 }}>{heroContent.title}</h1>
-        <p class="tagline" in:fly={{ y: 30, duration: 1000, delay: 700 }}>
-          {heroContent.subtitle}
-        </p>
-        <div class="hero-actions" in:fly={{ y: 30, duration: 1000, delay: 900 }}>
-          <button class="cta-primary" on:click={heroContent.primaryAction}>{heroContent.primaryBtn}</button>
-          <button class="cta-secondary" on:click={heroContent.secondaryAction}>{heroContent.secondaryBtn}</button>
-        </div>
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-content" in:fade={{ duration: 1000, delay: 300 }}>
+      <h1 in:fly={{ y: 50, duration: 1000, delay: 500 }}>{heroContent.title}</h1>
+      <p class="tagline" in:fly={{ y: 30, duration: 1000, delay: 700 }}>
+        {heroContent.subtitle}
+      </p>
+      <div class="hero-actions" in:fly={{ y: 30, duration: 1000, delay: 900 }}>
+        <button class="cta-primary" on:click={heroContent.primaryAction}>{heroContent.primaryBtn}</button>
+        <button class="cta-secondary" on:click={heroContent.secondaryAction}>{heroContent.secondaryBtn}</button>
       </div>
-      <div class="hero-overlay"></div>
-      <div class="hero-bg" style="background-image: url('/assets/minivan-2.jpeg')"></div>
-    </section>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-bg" style="background-image: url('/assets/minivan-2.jpeg')"></div>
+  </section>
 
+  <main>
     <slot />
   </main>
 
@@ -143,24 +265,24 @@
       <div class="footer-grid">
         <div class="footer-section">
           <img src="/logo-white.png" alt="Bebek Resort Logo" class="footer-logo" />
-          <p class="footer-desc">Experience luxury reimagined through sustainable design and upcycled art.</p>
+          <p class="footer-desc">{t('footer.description')}</p>
         </div>
 
         <div class="footer-section">
-          <h3>Navigation</h3>
-          <a href="/">Home</a>
-          <a href="/upcycling">Upcycling</a>
+          <h3>{t('footer.navigation')}</h3>
+          <a href="/{currentLang}">{t('nav.home')}</a>
+          <a href="/{currentLang}/upcycling">{t('nav.upcycling')}</a>
         </div>
 
         <div class="footer-section">
-          <h3>Contact</h3>
-          <p>Kozlu Köyü, Ayvacık</p>
-          <p>17862 Çanakkale, Türkiye</p>
-          <a href="mailto:info@bebekresort.com.tr">info@bebekresort.com.tr</a>
+          <h3>{t('footer.contact')}</h3>
+          <p>{t('contact.visit.location')}</p>
+          <p>{t('contact.visit.postal')}</p>
+          <a href="mailto:info@bebekresort.com.tr">{t('contact.email.address')}</a>
         </div>
 
         <div class="footer-section">
-          <h3>Follow Us</h3>
+          <h3>{t('footer.followUs')}</h3>
           <div class="social-links">
             <a href="https://instagram.com/bebekresortassos" class="social-link" aria-label="Instagram" target="_blank" rel="noopener">@bebekresortassos</a>
           </div>
@@ -168,10 +290,10 @@
       </div>
 
       <div class="footer-bottom">
-        <p>© {new Date().getFullYear()} Bebek Resort. All rights reserved.</p>
+        <p>{t('footer.copyright', { year: new Date().getFullYear() })}</p>
         <div class="footer-links">
           <a href="https://cengel.studio" target="_blank" rel="noopener" class="developer-link">
-            Developed by <img src="/cengelstudio-logo.png" alt="Cengel Studio" class="developer-logo" />
+            {t('footer.developedBy')} <img src="/cengelstudio-logo.png" alt="Cengel Studio" class="developer-logo" />
           </a>
         </div>
       </div>
@@ -422,6 +544,12 @@
 
   main {
     min-height: 100vh;
+  }
+
+  @media (max-width: 768px) {
+    main {
+      padding-top: 90px;
+    }
   }
 
   footer {
@@ -767,10 +895,6 @@
 
     .footer-links {
       justify-content: center;
-    }
-
-    main {
-      padding-top: 90px;
     }
   }
 

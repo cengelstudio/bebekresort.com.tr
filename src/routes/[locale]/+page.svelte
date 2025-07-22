@@ -1,6 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { fade, fly, slide } from 'svelte/transition';
+  import { page } from '$app/stores';
+
+  export let data: { locale: string; translations: any };
 
   let statsVisible = false;
   let galleryImages = [
@@ -11,6 +14,33 @@
     { src: '/assets/room-2.jpeg', title: 'Premium Amenities', desc: 'Luxury meets sustainability' },
     { src: '/assets/hotel-3.jpeg', title: 'Architectural Marvel', desc: 'Where vintage meets modern design' }
   ];
+
+  // Helper function to get translation from loaded data
+  function t(key: string, params?: Record<string, any>): string {
+    const keys = key.split('.');
+    let value: any = data.translations;
+
+    for (const k of keys) {
+      if (value && typeof value === 'object' && k in value) {
+        value = value[k];
+      } else {
+        return key; // Return key if translation not found
+      }
+    }
+
+    if (typeof value !== 'string') {
+      return key;
+    }
+
+    // Replace parameters
+    if (params) {
+      return value.replace(/\{(\w+)\}/g, (match: string, param: string) => {
+        return params[param] !== undefined ? String(params[param]) : match;
+      });
+    }
+
+    return value;
+  }
 
   onMount(() => {
     // Intersection Observer for animations
@@ -32,7 +62,24 @@
 </script>
 
 <svelte:head>
-  <title>Bebek Resort - Luxury Reimagined</title>
+  <title>Bebek Resort - Luxury Reimagined | Sustainable Tourism in Assos</title>
+  <meta name="description" content="Discover Bebek Resort in Assos, Turkey. Experience luxury reimagined through sustainable design and upcycling. Vintage caravans, mountain views, and Aegean Sea access await." />
+  <meta name="keywords" content="Bebek Resort, Assos Turkey, sustainable luxury, upcycling hotel, vintage caravans, Aegean Sea, Kaz Mountains, eco-tourism" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Bebek Resort - Luxury Reimagined | Sustainable Tourism in Assos" />
+  <meta property="og:description" content="Discover Bebek Resort in Assos, Turkey. Experience luxury reimagined through sustainable design and upcycling." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bebekresort.com.tr/" />
+  <meta property="og:image" content="https://bebekresort.com.tr/assets/hotel-1.jpeg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:title" content="Bebek Resort - Luxury Reimagined | Sustainable Tourism in Assos" />
+  <meta name="twitter:description" content="Discover Bebek Resort in Assos, Turkey. Experience luxury reimagined through sustainable design and upcycling." />
+  <meta name="twitter:image" content="https://bebekresort.com.tr/assets/hotel-1.jpeg" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://bebekresort.com.tr/" />
 </svelte:head>
 
 <div class="container">
@@ -41,15 +88,15 @@
     <div class="stats-container">
       <div class="stat">
         <div class="stat-number" class:animate={statsVisible}>97.5</div>
-        <div class="stat-label">SQM OF WONDER</div>
+        <div class="stat-label">{t('stats.wonder')}</div>
       </div>
       <div class="stat">
         <div class="stat-number" class:animate={statsVisible}>2</div>
-        <div class="stat-label">UNIQUE ROOMS</div>
+        <div class="stat-label">{t('stats.rooms')}</div>
       </div>
       <div class="stat">
         <div class="stat-number infinity" class:animate={statsVisible}>∞</div>
-        <div class="stat-label">MEMORIES</div>
+        <div class="stat-label">{t('stats.memories')}</div>
       </div>
     </div>
   </section>
@@ -58,31 +105,27 @@
   <section class="about animate-on-scroll" id="about">
     <div class="about-content">
       <div class="section-header">
-        <h2>DISCOVER THE UNEXPECTED</h2>
+        <h2>{t('about.title')}</h2>
         <div class="divider"></div>
       </div>
       <p class="about-text">
-        At the foot of the Kaz Mountains, with its elevated elevation and sea views of Lesbos Island,
-        the upcycling-themed Bebek Resort, located in the center of Kozlu village, is as small as a baby.
-        It's only 97.5 square meters! This tiny space is worth a visit, as it will make you wonder if you're
-        in a neighborhood, a hotel, a café or a bistro, a museum or a parking lot, a cruise ship or a caravan,
-        or in the past or the present!
+        {t('about.description')}
       </p>
       <div class="about-features">
         <div class="feature-highlight">
           <div class="feature-icon">🏔️</div>
-          <h3>Mountain Views</h3>
-          <p>Breathtaking Kaz Mountains panorama</p>
+          <h3>{t('about.features.mountain.title')}</h3>
+          <p>{t('about.features.mountain.description')}</p>
         </div>
         <div class="feature-highlight">
           <div class="feature-icon">🌊</div>
-          <h3>Sea Access</h3>
-          <p>Direct access to pristine Aegean waters</p>
+          <h3>{t('about.features.sea.title')}</h3>
+          <p>{t('about.features.sea.description')}</p>
         </div>
         <div class="feature-highlight">
           <div class="feature-icon">🏛️</div>
-          <h3>Historic Setting</h3>
-          <p>Ancient Assos stone architecture</p>
+          <h3>{t('about.features.historic.title')}</h3>
+          <p>{t('about.features.historic.description')}</p>
         </div>
       </div>
     </div>
@@ -92,7 +135,7 @@
   <section class="features animate-on-scroll" id="features">
     <div class="features-content">
       <div class="section-header">
-        <h2>EXTRAORDINARY ACCOMMODATIONS</h2>
+        <h2>{t('features.title')}</h2>
         <div class="divider"></div>
       </div>
       <div class="features-grid">
@@ -101,8 +144,8 @@
             <img src="/assets/minivan-3.jpeg" alt="Caravans" />
           </div>
           <div class="feature-content">
-            <h3>CARAVANS</h3>
-            <p>Experience the charm of repurposed caravans transformed into cozy and unique accommodations, where nostalgia meets luxury comfort in an unforgettable experience.</p>
+            <h3>{t('features.caravans.title')}</h3>
+            <p>{t('features.caravans.description')}</p>
           </div>
         </div>
         <div class="feature-card">
@@ -110,8 +153,8 @@
             <img src="/assets/room-3.jpeg" alt="Caravan Room" />
           </div>
           <div class="feature-content">
-            <h3>CARAVAN ROOM</h3>
-            <p>Experience the charm of a repurposed caravan transformed into a cozy and unique accommodation, combining nostalgia with modern comfort.</p>
+            <h3>{t('features.caravanRoom.title')}</h3>
+            <p>{t('features.caravanRoom.description')}</p>
           </div>
         </div>
         <div class="feature-card">
@@ -119,8 +162,8 @@
             <img src="/assets/minivan-2.jpeg" alt="Historic Charm" />
           </div>
           <div class="feature-content">
-            <h3>HISTORIC CHARM</h3>
-            <p>A stonemason used stones (Assos stone) from a ruined stone house to build a perimeter wall, where ancient craftsmanship meets contemporary design.</p>
+            <h3>{t('features.historicCharm.title')}</h3>
+            <p>{t('features.historicCharm.description')}</p>
           </div>
         </div>
       </div>
@@ -131,8 +174,8 @@
   <section class="gallery animate-on-scroll" id="gallery">
     <div class="gallery-content">
       <div class="section-header">
-        <h2>Our Spaces</h2>
-        <p class="section-subtitle">Discover the unique character of each carefully designed space</p>
+        <h2>{t('gallery.title')}</h2>
+        <p class="section-subtitle">{t('gallery.subtitle')}</p>
       </div>
 
       <div class="gallery-grid">
@@ -151,23 +194,23 @@
       <div class="contact-grid">
         <div class="contact-info">
           <div class="section-header">
-            <h2>Book Your Escape</h2>
-            <p class="section-subtitle">Ready to experience something extraordinary?</p>
+            <h2>{t('contact.title')}</h2>
+            <p class="section-subtitle">{t('contact.subtitle')}</p>
           </div>
           <div class="contact-details">
             <div class="contact-item">
               <div class="contact-icon">📍</div>
               <div>
-                <h3>Visit Us</h3>
-                <p>Bebek Resort<br>Kozlu Köyü, Ayvacık<br>17862 Çanakkale, Türkiye</p>
+                <h3>{t('contact.visit.title')}</h3>
+                <p>{t('contact.visit.address')}<br>{t('contact.visit.location')}<br>{t('contact.visit.postal')}</p>
               </div>
             </div>
             <div class="contact-item">
               <div class="contact-icon">✉️</div>
               <div>
-                <h3>Get in Touch</h3>
+                <h3>{t('contact.email.title')}</h3>
                 <a href="mailto:info@bebekresort.com.tr" class="email-link">
-                  info@bebekresort.com.tr
+                  {t('contact.email.address')}
                 </a>
               </div>
             </div>
@@ -177,8 +220,8 @@
         <div class="contact-visual">
           <img src="/assets/hotel-2.jpeg" alt="Resort location view" />
           <div class="visual-overlay">
-            <h3>Your Paradise Awaits</h3>
-            <p>Where memories are made</p>
+            <h3>{t('contact.visual.title')}</h3>
+            <p>{t('contact.visual.subtitle')}</p>
           </div>
         </div>
       </div>
@@ -191,7 +234,6 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
   }
 
   /* Stats Section */

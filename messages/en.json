@@ -1,4 +1,165 @@
 {
-	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"hello_world": "Hello, {name} from en!"
+  "nav": {
+    "home": "Home",
+    "upcycling": "Upcycling"
+  },
+  "hero": {
+    "title": "BEBEK RESORT",
+    "subtitle": "WHERE VINTAGE MEETS LUXURY",
+    "primaryBtn": "Explore Rooms",
+    "secondaryBtn": "Make Reservation"
+  },
+  "stats": {
+    "wonder": "AMAZING SQM",
+    "rooms": "UNIQUE ROOMS",
+    "memories": "MEMORIES"
+  },
+  "about": {
+    "title": "DISCOVER THE UNEXPECTED",
+    "description": "Located in the center of Kozlu village, at the foothills of Kaz Mountains, with its high location and sea view of Lesbos Island, the upcycling-themed Bebek Resort is as small as a baby. Only 97.5 square meters! This small area is worth visiting because it will make you wonder whether you are in a neighborhood, hotel, cafe or bistro, museum or parking lot, cruise ship or caravan, or in the past or present!",
+    "features": {
+      "mountain": {
+        "title": "Mountain View",
+        "description": "Breathtaking Kaz Mountains panorama"
+      },
+      "sea": {
+        "title": "Sea Access",
+        "description": "Direct access to the crystal clear waters of the Aegean"
+      },
+      "historic": {
+        "title": "Historic Location",
+        "description": "Ancient Assos stone architecture"
+      }
+    }
+  },
+  "features": {
+    "title": "EXTRAORDINARY ACCOMMODATION",
+    "caravans": {
+      "title": "CARAVANS",
+      "description": "Experience the charm of repurposed caravans transformed into comfortable and unique accommodation areas where nostalgia meets luxury comfort in an unforgettable experience."
+    },
+    "caravanRoom": {
+      "title": "CARAVAN ROOM",
+      "description": "Experience the charm of a caravan transformed into a comfortable and unique accommodation area that combines nostalgia with modern comfort."
+    },
+    "historicCharm": {
+      "title": "HISTORIC CHARM",
+      "description": "A stonemason built the surrounding wall using stones (Assos stone) from a ruined stone house, where ancient craftsmanship meets contemporary design."
+    }
+  },
+  "gallery": {
+    "title": "Our Spaces",
+    "subtitle": "Discover the unique character of each carefully designed space"
+  },
+  "contact": {
+    "title": "Reserve Your Escape",
+    "subtitle": "Ready to experience something extraordinary?",
+    "visit": {
+      "title": "Visit Us",
+      "address": "Bebek Resort",
+      "location": "Kozlu Village, Ayvacık",
+      "postal": "17862 Çanakkale, Turkey"
+    },
+    "email": {
+      "title": "Get in Touch",
+      "address": "info@bebekresort.com.tr"
+    },
+    "visual": {
+      "title": "Your Paradise Awaits",
+      "subtitle": "Where memories are created"
+    }
+  },
+  "footer": {
+    "description": "Experience luxury reimagined through sustainable design and upcycled art.",
+    "navigation": "Navigation",
+    "contact": "Contact",
+    "followUs": "Follow Us",
+    "copyright": "© {year} Bebek Resort. All rights reserved.",
+    "developedBy": "Developed by"
+  },
+  "upcycling": {
+    "hero": {
+      "title": "UPCYCLING",
+      "subtitle": "TRANSFORMING THE ORDINARY INTO EXTRAORDINARY",
+      "primaryBtn": "Discover Transformations"
+    },
+    "concept": {
+      "title": "UPCYCLING CONCEPT",
+      "subtitle": "TRANSFORMING THE ORDINARY INTO EXTRAORDINARY",
+      "description": "At Bebek Resort, we believe that every object has a story and potential for transformation. Our upcycling philosophy goes beyond simple recycling - we breathe new life into discarded materials, creating unique and sustainable spaces that tell stories of innovation and creativity.",
+      "benefits": {
+        "sustainable": {
+          "title": "SUSTAINABLE DESIGN",
+          "description": "Reducing environmental impact through creative reuse of materials and innovative design solutions.",
+          "stat": "85%",
+          "label": "MATERIALS REUSED"
+        },
+        "creative": {
+          "title": "CREATIVE INNOVATION",
+          "description": "Transforming everyday objects into extraordinary design elements through artistic vision and craftsmanship.",
+          "stat": "25+",
+          "label": "UNIQUE PIECES"
+        },
+        "valuable": {
+          "title": "VALUE CREATION",
+          "description": "Adding new value and purpose to materials that would otherwise be discarded or forgotten.",
+          "stat": "100%",
+          "label": "ZERO WASTE"
+        }
+      }
+    },
+    "gallery": {
+      "title": "TRANSFORMATIONS"
+    },
+    "process": {
+      "title": "OUR PROCESS",
+      "steps": {
+        "discovery": {
+          "title": "DISCOVERY",
+          "description": "We seek out unique materials and objects with potential for transformation, from vintage caravans to industrial equipment."
+        },
+        "vision": {
+          "title": "VISION",
+          "description": "Our design team envisions new possibilities, creating detailed plans for how each object can be transformed."
+        },
+        "craftsmanship": {
+          "title": "CRAFTSMANSHIP",
+          "description": "Skilled artisans carefully restore and transform materials, preserving their character while adding new functionality."
+        },
+        "integration": {
+          "title": "INTEGRATION",
+          "description": "Transformed pieces are thoughtfully integrated into our spaces, creating harmonious and functional environments."
+        }
+      }
+    },
+    "benefits": {
+      "title": "BENEFITS",
+      "environmental": {
+        "title": "ENVIRONMENTAL",
+        "description": "Reducing waste and carbon footprint through sustainable material reuse and innovative design practices.",
+        "stat": "85% LESS WASTE"
+      },
+      "creativity": {
+        "title": "CREATIVITY",
+        "description": "Fostering artistic expression and innovative thinking through unique design challenges and material constraints.",
+        "stat": "25+ UNIQUE DESIGNS"
+      },
+      "economic": {
+        "title": "ECONOMIC",
+        "description": "Creating value from discarded materials while supporting local craftsmanship and sustainable business practices.",
+        "stat": "40% COST SAVINGS"
+      }
+    },
+    "stats": {
+      "transformed": "TRANSFORMED OBJECTS",
+      "history": "YEARS OF HISTORY",
+      "sustainable": "SUSTAINABLE",
+      "stories": "STORIES TO TELL"
+    },
+    "cta": {
+      "title": "EXPERIENCE UPCYCLING",
+      "description": "Discover how we transform ordinary materials into extraordinary experiences. Book your stay and witness the magic of sustainable luxury.",
+      "bookStay": "BOOK YOUR STAY"
+    }
+  }
 }

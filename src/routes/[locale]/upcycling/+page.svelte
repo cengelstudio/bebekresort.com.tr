@@ -1,7 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { fade, fly, scale } from 'svelte/transition';
-  import { messages } from '$lib';
+
+  export let data: { locale: string; translations: any };
 
   let isLoaded = false;
   let currentSlide = 0;
@@ -16,6 +17,33 @@
 
   let conceptVisible = false;
   let statsVisible = false;
+
+  // Helper function to get translation from loaded data
+  function t(key: string, params?: Record<string, any>): string {
+    const keys = key.split('.');
+    let value: any = data.translations;
+
+    for (const k of keys) {
+      if (value && typeof value === 'object' && k in value) {
+        value = value[k];
+      } else {
+        return key; // Return key if translation not found
+      }
+    }
+
+    if (typeof value !== 'string') {
+      return key;
+    }
+
+    // Replace parameters
+    if (params) {
+      return value.replace(/\{(\w+)\}/g, (match: string, param: string) => {
+        return params[param] !== undefined ? String(params[param]) : match;
+      });
+    }
+
+    return value;
+  }
 
   function nextSlide() {
     currentSlide = (currentSlide + 1) % Math.ceil(transformationImages.length / 2);
@@ -53,7 +81,24 @@
 </script>
 
 <svelte:head>
-  <title>Upcycling - Bebek Resort</title>
+  <title>Upcycling Concept - Bebek Resort | Sustainable Design in Assos</title>
+  <meta name="description" content="Discover our unique upcycling concept at Bebek Resort. See how we transform ordinary materials into extraordinary experiences with vintage caravans and sustainable design." />
+  <meta name="keywords" content="upcycling, sustainable design, Bebek Resort, vintage caravans, eco-friendly hotel, Assos Turkey, recycled materials, green tourism" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Upcycling Concept - Bebek Resort | Sustainable Design in Assos" />
+  <meta property="og:description" content="Discover our unique upcycling concept at Bebek Resort. See how we transform ordinary materials into extraordinary experiences." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bebekresort.com.tr/upcycling" />
+  <meta property="og:image" content="https://bebekresort.com.tr/assets/minivan-2.jpeg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:title" content="Upcycling Concept - Bebek Resort | Sustainable Design in Assos" />
+  <meta name="twitter:description" content="Discover our unique upcycling concept at Bebek Resort. See how we transform ordinary materials into extraordinary experiences." />
+  <meta name="twitter:image" content="https://bebekresort.com.tr/assets/minivan-2.jpeg" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://bebekresort.com.tr/upcycling" />
 </svelte:head>
 
 <div class="container">
@@ -61,33 +106,33 @@
   <section class="concept animate-on-scroll" id="concept">
     <div class="concept-content">
       <div class="section-header">
-        <h2>{messages.upcycling.concept.title()}</h2>
-        <p class="section-subtitle">{messages.upcycling.concept.subtitle()}</p>
+        <h2>{t('upcycling.concept.title')}</h2>
+        <p class="section-subtitle">{t('upcycling.concept.subtitle')}</p>
       </div>
       <p class="concept-text">
-        {messages.upcycling.concept.description()}
+        {t('upcycling.concept.description')}
       </p>
       <div class="concept-grid">
         <div class="concept-item" class:animate={conceptVisible}>
           <div class="concept-icon">♻️</div>
-          <h3>{messages.upcycling.concept.benefits.sustainable.title()}</h3>
-          <p>{messages.upcycling.concept.benefits.sustainable.description()}</p>
-          <div class="concept-number">{messages.upcycling.concept.benefits.sustainable.stat()}</div>
-          <span>{messages.upcycling.concept.benefits.sustainable.label()}</span>
+          <h3>{t('upcycling.concept.benefits.sustainable.title')}</h3>
+          <p>{t('upcycling.concept.benefits.sustainable.description')}</p>
+          <div class="concept-number">{t('upcycling.concept.benefits.sustainable.stat')}</div>
+          <span>{t('upcycling.concept.benefits.sustainable.label')}</span>
         </div>
         <div class="concept-item" class:animate={conceptVisible}>
           <div class="concept-icon">🎨</div>
-          <h3>{messages.upcycling.concept.benefits.creative.title()}</h3>
-          <p>{messages.upcycling.concept.benefits.creative.description()}</p>
-          <div class="concept-number">{messages.upcycling.concept.benefits.creative.stat()}</div>
-          <span>{messages.upcycling.concept.benefits.creative.label()}</span>
+          <h3>{t('upcycling.concept.benefits.creative.title')}</h3>
+          <p>{t('upcycling.concept.benefits.creative.description')}</p>
+          <div class="concept-number">{t('upcycling.concept.benefits.creative.stat')}</div>
+          <span>{t('upcycling.concept.benefits.creative.label')}</span>
         </div>
         <div class="concept-item" class:animate={conceptVisible}>
           <div class="concept-icon">💎</div>
-          <h3>{messages.upcycling.concept.benefits.valuable.title()}</h3>
-          <p>{messages.upcycling.concept.benefits.valuable.description()}</p>
-          <div class="concept-number">{messages.upcycling.concept.benefits.valuable.stat()}</div>
-          <span>{messages.upcycling.concept.benefits.valuable.label()}</span>
+          <h3>{t('upcycling.concept.benefits.valuable.title')}</h3>
+          <p>{t('upcycling.concept.benefits.valuable.description')}</p>
+          <div class="concept-number">{t('upcycling.concept.benefits.valuable.stat')}</div>
+          <span>{t('upcycling.concept.benefits.valuable.label')}</span>
         </div>
       </div>
     </div>
@@ -97,7 +142,7 @@
   <section class="gallery animate-on-scroll" id="examples">
     <div class="gallery-content">
       <div class="section-header">
-        <h2>{messages.upcycling.gallery.title()}</h2>
+        <h2>{t('upcycling.gallery.title')}</h2>
         <div class="divider"></div>
       </div>
 
@@ -108,11 +153,6 @@
               {#each transformationImages.slice(slideIndex * 2, slideIndex * 2 + 2) as image}
                 <div class="gallery-item">
                   <img src={image.src} alt={image.title} />
-                  <div class="gallery-overlay">
-                    <h3>{image.title}</h3>
-                    <p>{image.desc}</p>
-                    <button class="view-details">View Details</button>
-                  </div>
                 </div>
               {/each}
             </div>
@@ -137,36 +177,36 @@
   <section class="process animate-on-scroll" id="process">
     <div class="process-content">
       <div class="section-header">
-        <h2>{messages.upcycling.process.title()}</h2>
+        <h2>{t('upcycling.process.title')}</h2>
         <div class="divider"></div>
       </div>
       <div class="process-steps">
         <div class="process-step">
           <div class="step-number">01</div>
           <div class="step-content">
-            <h3>{messages.upcycling.process.steps.discovery.title()}</h3>
-            <p>{messages.upcycling.process.steps.discovery.description()}</p>
+            <h3>{t('upcycling.process.steps.discovery.title')}</h3>
+            <p>{t('upcycling.process.steps.discovery.description')}</p>
           </div>
         </div>
         <div class="process-step">
           <div class="step-number">02</div>
           <div class="step-content">
-            <h3>{messages.upcycling.process.steps.vision.title()}</h3>
-            <p>{messages.upcycling.process.steps.vision.description()}</p>
+            <h3>{t('upcycling.process.steps.vision.title')}</h3>
+            <p>{t('upcycling.process.steps.vision.description')}</p>
           </div>
         </div>
         <div class="process-step">
           <div class="step-number">03</div>
           <div class="step-content">
-            <h3>{messages.upcycling.process.steps.craftsmanship.title()}</h3>
-            <p>{messages.upcycling.process.steps.craftsmanship.description()}</p>
+            <h3>{t('upcycling.process.steps.craftsmanship.title')}</h3>
+            <p>{t('upcycling.process.steps.craftsmanship.description')}</p>
           </div>
         </div>
         <div class="process-step">
           <div class="step-number">04</div>
           <div class="step-content">
-            <h3>{messages.upcycling.process.steps.integration.title()}</h3>
-            <p>{messages.upcycling.process.steps.integration.description()}</p>
+            <h3>{t('upcycling.process.steps.integration.title')}</h3>
+            <p>{t('upcycling.process.steps.integration.description')}</p>
           </div>
         </div>
       </div>
@@ -177,27 +217,27 @@
   <section class="benefits animate-on-scroll" id="benefits">
     <div class="benefits-content">
       <div class="section-header">
-        <h2>{messages.upcycling.benefits.title()}</h2>
+        <h2>{t('upcycling.benefits.title')}</h2>
         <div class="divider"></div>
       </div>
       <div class="benefits-grid">
         <div class="benefit-card">
           <div class="benefit-icon">🌍</div>
-          <h3>{messages.upcycling.benefits.environmental.title()}</h3>
-          <p>{messages.upcycling.benefits.environmental.description()}</p>
-          <div class="benefit-stat">{messages.upcycling.benefits.environmental.stat()}</div>
+          <h3>{t('upcycling.benefits.environmental.title')}</h3>
+          <p>{t('upcycling.benefits.environmental.description')}</p>
+          <div class="benefit-stat">{t('upcycling.benefits.environmental.stat')}</div>
         </div>
         <div class="benefit-card">
           <div class="benefit-icon">🎨</div>
-          <h3>{messages.upcycling.benefits.creativity.title()}</h3>
-          <p>{messages.upcycling.benefits.creativity.description()}</p>
-          <div class="benefit-stat">{messages.upcycling.benefits.creativity.stat()}</div>
+          <h3>{t('upcycling.benefits.creativity.title')}</h3>
+          <p>{t('upcycling.benefits.creativity.description')}</p>
+          <div class="benefit-stat">{t('upcycling.benefits.creativity.stat')}</div>
         </div>
         <div class="benefit-card">
           <div class="benefit-icon">💰</div>
-          <h3>{messages.upcycling.benefits.economic.title()}</h3>
-          <p>{messages.upcycling.benefits.economic.description()}</p>
-          <div class="benefit-stat">{messages.upcycling.benefits.economic.stat()}</div>
+          <h3>{t('upcycling.benefits.economic.title')}</h3>
+          <p>{t('upcycling.benefits.economic.description')}</p>
+          <div class="benefit-stat">{t('upcycling.benefits.economic.stat')}</div>
         </div>
       </div>
     </div>
@@ -209,19 +249,19 @@
       <div class="stats-grid">
         <div class="stat-item">
           <div class="stat-number" class:animate={statsVisible}>25+</div>
-          <div class="stat-label">{messages.upcycling.stats.transformed()}</div>
+          <div class="stat-label">{t('upcycling.stats.transformed')}</div>
         </div>
         <div class="stat-item">
           <div class="stat-number" class:animate={statsVisible}>500+</div>
-          <div class="stat-label">{messages.upcycling.stats.history()}</div>
+          <div class="stat-label">{t('upcycling.stats.history')}</div>
         </div>
         <div class="stat-item">
           <div class="stat-number" class:animate={statsVisible}>100%</div>
-          <div class="stat-label">{messages.upcycling.stats.sustainable()}</div>
+          <div class="stat-label">{t('upcycling.stats.sustainable')}</div>
         </div>
         <div class="stat-item">
           <div class="stat-number infinity" class:animate={statsVisible}>∞</div>
-          <div class="stat-label">{messages.upcycling.stats.stories()}</div>
+          <div class="stat-label">{t('upcycling.stats.stories')}</div>
         </div>
       </div>
     </div>
@@ -230,11 +270,10 @@
   <!-- Call to Action -->
   <section class="cta-section" id="cta">
     <div class="cta-content">
-      <h2>{messages.upcycling.cta.title()}</h2>
-      <p>{messages.upcycling.cta.description()}</p>
+      <h2>{t('upcycling.cta.title')}</h2>
+      <p>{t('upcycling.cta.description')}</p>
       <div class="cta-actions">
-        <button class="cta-primary large">{messages.upcycling.cta.bookStay()}</button>
-        <button class="cta-secondary large">{messages.upcycling.cta.scheduleTour()}</button>
+        <a href="mailto:info@bebekresort.com.tr" class="cta-primary large">{t('upcycling.cta.bookStay')}</a>
       </div>
     </div>
     <div class="cta-bg" style="background-image: url('/assets/minivan-2.jpeg')"></div>
@@ -250,72 +289,7 @@
     overflow-x: hidden;
   }
 
-  /* Hero Section */
-  .hero {
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
 
-  .hero-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-  }
-
-  .hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 100%);
-    z-index: 1;
-  }
-
-  .hero-content {
-    text-align: center;
-    z-index: 2;
-    position: relative;
-    color: white;
-    max-width: 800px;
-    padding: 0 2rem;
-  }
-
-  .hero-content h1 {
-    font-size: clamp(3rem, 8vw, 6rem);
-    font-weight: 900;
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.1em;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    background: linear-gradient(135deg, #fff 0%, var(--primary-color) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .tagline {
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
-    margin-bottom: 3rem;
-    letter-spacing: 0.2em;
-    color: var(--accent-color);
-    font-weight: 300;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
 
   .cta-primary, .cta-secondary {
     padding: 1rem 2.5rem;
@@ -329,6 +303,8 @@
     border-radius: 0;
     position: relative;
     overflow: hidden;
+    text-decoration: none;
+    display: inline-block;
   }
 
   .cta-primary.large, .cta-secondary.large {
@@ -538,60 +514,7 @@
     transition: transform 0.5s ease;
   }
 
-  .gallery-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(255,30,86,0.8) 100%);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    padding: 3rem;
-    text-align: center;
-  }
 
-  .gallery-item:hover img {
-    transform: scale(1.2);
-  }
-
-  .gallery-item:hover .gallery-overlay {
-    opacity: 1;
-  }
-
-  .gallery-overlay h3 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    font-weight: 700;
-  }
-
-  .gallery-overlay p {
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-  }
-
-  .view-details {
-    background: transparent;
-    color: var(--accent-color);
-    border: 2px solid var(--accent-color);
-    padding: 0.8rem 2rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .view-details:hover {
-    background: var(--accent-color);
-    color: #000;
-  }
 
   .gallery-btn {
     position: absolute;
@@ -881,11 +804,6 @@
     transition: all 1s ease;
   }
 
-  .animate-on-scroll.animate-in {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
   /* Responsive Design */
   @media (max-width: 1200px) {
     .gallery-slide {
@@ -894,7 +812,7 @@
   }
 
   @media (max-width: 768px) {
-    .hero-actions, .cta-actions {
+    .cta-actions {
       flex-direction: column;
       align-items: center;
     }
@@ -932,7 +850,7 @@
   }
 
   @media (max-width: 480px) {
-    .hero-content, .cta-content {
+    .cta-content {
       padding: 0 1rem;
     }
 
