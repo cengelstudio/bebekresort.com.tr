@@ -120,7 +120,3 @@ The application is containerized for easy deployment:
 ## 📄 License
 
 This project is proprietary software for Bebek Resort.
-
----
-
-Built with ❤️ for sustainable luxury tourism
