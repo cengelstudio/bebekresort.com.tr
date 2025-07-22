@@ -1,14 +1,19 @@
 import type { LayoutLoad } from './$types';
-import { loadTranslation, type Locale } from '$lib/i18n';
+import type { Locale } from '$lib/types';
+import { SUPPORTED_LOCALES, DEFAULT_LOCALE } from '$lib/constants';
+import { getValidLocale } from '$lib/utils';
 
-export const load: LayoutLoad = async ({ data, params, fetch }) => {
-  const { locale } = params;
+export const load: LayoutLoad = async ({ data, params }) => {
+	const { locale } = params;
 
-  // Load translations for the current locale using event.fetch
-  const translations = await loadTranslation(locale as Locale, fetch);
+	// Validate and get valid locale
+	const validLocale = getValidLocale(locale);
 
-  return {
-    locale,
-    translations
-  };
+	// Use translations already loaded on server side
+	const translations = data.translations || {};
+
+	return {
+		locale: validLocale,
+		translations
+	};
 };

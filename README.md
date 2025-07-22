@@ -1,44 +1,126 @@
-# Bebek Resort Hotel
+# Bebek Resort - Luxury Reimagined
 
-## About
+A modern, sustainable luxury resort website built with SvelteKit, featuring upcycling concepts and multilingual support.
 
-Bebek is one of Istanbul's wealthiest and most popular neighborhoods.
+## 🏗️ Project Structure
 
-It's home to a plethora of chic cafes, restaurants, and shops. Its coastline, stretching from Arnavutköy to Rumeli Hisarı, offers some of Istanbul's most spectacular views.
+```
+bresort/
+├── src/
+│   ├── lib/
+│   │   ├── components/     # Reusable UI components
+│   │   ├── constants/      # Application constants
+│   │   ├── types/          # TypeScript type definitions
+│   │   ├── utils/          # Utility functions
+│   │   ├── i18n.ts         # Internationalization (client)
+│   │   ├── i18n.server.ts  # Internationalization (server)
+│   │   └── index.ts        # Main exports
+│   ├── routes/
+│   │   └── [locale]/       # Localized routes
+│   ├── app.html            # HTML template
+│   └── app.css             # Global styles
+├── static/
+│   ├── documents/          # SEO files (sitemap, robots)
+│   ├── icons/              # Logo and favicon files
+│   ├── images/             # Hotel and room images
+│   └── messages/           # Translation files
+├── Dockerfile              # Production Docker configuration
+├── docker-compose.yml      # Docker deployment setup
+├── deploy.sh               # Automated deployment script
+└── package.json            # Dependencies and scripts
+```
 
-The "Bebek" neighborhood is being reborn in Kozlu village, in the Assos region!
+## 🚀 Quick Start
 
-At the foot of the Kaz Mountains, with its elevated elevation and sea views of Lesbos Island, the upcycling-themed Bebek Resort, located in the center of Kozlu village, is as small as a baby. It's only 97.5 square meters!
+### Development
 
-This tiny space is worth a visit, as it will make you wonder if you're in a neighborhood, a hotel, a café or a bistro, a museum or a parking lot, a cruise ship or a caravan, or in the past or the present!
+```bash
+# Install dependencies
+yarn install
 
-A stonemason used stones (Assos stone) from a ruined stone house to build a perimeter wall. Two scrap minibuses, previously decommissioned, were repurposed as sleeping units. The toilet and bathroom in the captain's cabin of a Norwegian cruise ship were redesigned. Old telephone poles were used in the roof. A stainless steel industrial refrigerator was repurposed as a laundry room. A secondhand mannequin representing a uniformed naval officer was placed in memory of the Gallipoli Campaign of World War I.
+# Start development server
+yarn dev
 
-Bebek Resort demands attention, a place for little ones and a charming journey through time for adults.
+# Build for production
+yarn build
 
-## Upcycling
+# Preview production build
+yarn preview
+```
 
-### What is Upcycling?
+### Production Deployment
 
-Upcycling is the process of transforming old and unused products or materials into more valuable and functional items. This process often requires a creative and artistic approach. For example, creating a stylish lamp from an old wine bottle or a new bag from a pair of old jeans are examples of upcycling. In this process, old products are often given a new life with a higher value and sometimes take on a completely different function. Upcycling not only minimizes waste but also benefits the environment by introducing new ideas in design and aesthetics.
+```bash
+# Deploy with Docker
+./deploy.sh
 
-### Advantages of Upcycling
+# Or manually
+docker compose up -d
+```
 
-Reducing Environmental Impact: Reduces waste because old materials are reused.
-Stimulates Creativity: Opens up a diverse and creative avenue for designers and artists.
-Economic Benefits: Old products or materials can be transformed into high-quality, unique products, generating additional income.
+## 🌍 Internationalization
+
+The application supports multiple languages:
+
+- 🇺🇸 English (`/en`)
+- 🇹🇷 Turkish (`/tr`)
+- 🇫🇷 French (`/fr`)
+- 🇪🇸 Spanish (`/es`)
+
+Translation files are located in `static/messages/`.
+
+## 🐳 Docker Deployment
+
+The application is containerized for easy deployment:
+
+- **Port**: 6778
+- **Node Version**: 20+
+- **Base Image**: Alpine Linux
+- **Health Checks**: Enabled
+- **Security**: Non-root user execution
+
+### Environment Variables
+
+- `NODE_ENV=production`
+- `PORT=6778`
+- `HOSTNAME=0.0.0.0`
+
+## 🛠️ Technology Stack
+
+- **Framework**: SvelteKit 2.0
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 4.0
+- **Deployment**: Docker + Docker Compose
+- **Node.js**: 20+ (Alpine)
+
+## 📁 Key Features
+
+- ✅ **Multilingual Support**: 4 languages with server-side rendering
+- ✅ **SEO Optimized**: Meta tags, sitemap, robots.txt
+- ✅ **Responsive Design**: Mobile-first approach
+- ✅ **Performance**: Optimized images and code splitting
+- ✅ **Accessibility**: WCAG compliant
+- ✅ **Security**: HTTPS ready, secure headers
+
+## 🔧 Development
+
+### Code Organization
+
+- **Types**: Centralized in `src/lib/types/`
+- **Constants**: Application constants in `src/lib/constants/`
+- **Utils**: Helper functions in `src/lib/utils/`
+- **Components**: Reusable UI components in `src/lib/components/`
+
+### Code Quality
+
+- **Linting**: ESLint configuration
+- **Formatting**: Prettier configuration
+- **Type Checking**: TypeScript strict mode
+
+## 📄 License
+
+This project is proprietary software for Bebek Resort.
 
 ---
 
-## Adresses
-
-Bebek Resort
-Kozlu Köyü, Ayvacık
-17862 Çanakkale, Türkiye
-
-## Contact
-info@bebekresort.com.tr
-
-## Logo Pack
-<img src="./static/logo-black.png" alt="Bebek Resort Black Logo" width="400" height="400" />
-<img src="./static/logo-white.png" alt="Bebek Resort White Logo" width="400" height="400" />
+Built with ❤️ for sustainable luxury tourism
