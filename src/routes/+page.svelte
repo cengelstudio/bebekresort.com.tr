@@ -2,15 +2,7 @@
   import { onMount } from 'svelte';
   import { fade, fly, slide } from 'svelte/transition';
 
-  let isLoaded = false;
-  let currentSlide = 0;
-  let heroImages = [
-    { src: '/assets/hotel-1.jpeg', title: 'LUXURY REDEFINED', subtitle: 'Experience extraordinary hospitality' },
-    { src: '/assets/sea-1.jpeg', title: 'AEGEAN PARADISE', subtitle: 'Where mountains meet the sea' },
-    { src: '/assets/hotel-2.jpeg', title: 'HISTORIC CHARM', subtitle: 'Modern comfort in ancient stones' }
-  ];
-
-  let currentGallerySlide = 0;
+  let statsVisible = false;
   let galleryImages = [
     { src: '/assets/hotel-1.jpeg', title: 'Hotel Exterior', desc: 'Stunning mountain and sea views' },
     { src: '/assets/room-1.jpeg', title: 'Luxury Suites', desc: 'Elegantly designed accommodations' },
@@ -20,30 +12,7 @@
     { src: '/assets/hotel-3.jpeg', title: 'Architectural Marvel', desc: 'Where vintage meets modern design' }
   ];
 
-  let statsVisible = false;
-
-  function nextSlide() {
-    currentSlide = (currentSlide + 1) % heroImages.length;
-  }
-
-  function prevSlide() {
-    currentSlide = currentSlide === 0 ? heroImages.length - 1 : currentSlide - 1;
-  }
-
-  function nextGallerySlide() {
-    currentGallerySlide = (currentGallerySlide + 1) % Math.ceil(galleryImages.length / 3);
-  }
-
-  function prevGallerySlide() {
-    currentGallerySlide = currentGallerySlide === 0 ? Math.ceil(galleryImages.length / 3) - 1 : currentGallerySlide - 1;
-  }
-
   onMount(() => {
-    isLoaded = true;
-
-    // Auto-slide hero images
-    setInterval(nextSlide, 5000);
-
     // Intersection Observer for animations
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -67,55 +36,6 @@
 </svelte:head>
 
 <div class="container">
-  <!-- Hero Section with Slider -->
-  <section class="hero" id="hero">
-    <div class="hero-slider">
-      {#each heroImages as image, index}
-        <div
-          class="hero-slide {index === currentSlide ? 'active' : ''}"
-          style="background-image: url({image.src})"
-        >
-          <div class="hero-overlay"></div>
-          {#if index === currentSlide}
-            <div class="hero-content" in:fade={{ duration: 1000 }}>
-              <h1 in:fly={{ y: 50, duration: 1200, delay: 300 }}>{image.title}</h1>
-              <p class="tagline" in:fly={{ y: 30, duration: 1000, delay: 600 }}>
-                {image.subtitle}
-              </p>
-              <div class="hero-actions" in:fly={{ y: 30, duration: 1000, delay: 900 }}>
-                <button class="cta-primary">Book Your Stay</button>
-                <button class="cta-secondary">Explore Rooms</button>
-              </div>
-            </div>
-          {/if}
-        </div>
-      {/each}
-    </div>
-
-    <!-- Navigation Arrows -->
-    <button class="slider-btn prev" on:click={prevSlide} aria-label="Previous slide">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-    <button class="slider-btn next" on:click={nextSlide} aria-label="Next slide">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-
-    <!-- Slide Indicators -->
-    <div class="slide-indicators">
-      {#each heroImages as _, index}
-        <button
-          class="indicator {index === currentSlide ? 'active' : ''}"
-          on:click={() => currentSlide = index}
-          aria-label="Go to slide {index + 1}"
-        ></button>
-      {/each}
-    </div>
-  </section>
-
   <!-- Stats Section -->
   <section class="stats-section animate-on-scroll">
     <div class="stats-container">
@@ -142,9 +62,11 @@
         <div class="divider"></div>
       </div>
       <p class="about-text">
-        At the foot of the Kaz Mountains, with elevated views of Lesbos Island,
-        lies a tiny paradise that will make you question reality. Is it a neighborhood?
-        A hotel? A museum? Or a time machine?
+        At the foot of the Kaz Mountains, with its elevated elevation and sea views of Lesbos Island,
+        the upcycling-themed Bebek Resort, located in the center of Kozlu village, is as small as a baby.
+        It's only 97.5 square meters! This tiny space is worth a visit, as it will make you wonder if you're
+        in a neighborhood, a hotel, a café or a bistro, a museum or a parking lot, a cruise ship or a caravan,
+        or in the past or the present!
       </p>
       <div class="about-features">
         <div class="feature-highlight">
@@ -176,32 +98,29 @@
       <div class="features-grid">
         <div class="feature-card">
           <div class="feature-image">
-            <img src="/assets/minivan-3.jpeg" alt="Vintage Minibus Room" />
+            <img src="/assets/minivan-3.jpeg" alt="Caravans" />
           </div>
           <div class="feature-content">
-            <h3>VINTAGE MINIBUS ROOMS</h3>
-            <p>Sleep in expertly converted retro minibuses, where nostalgia meets luxury comfort in an unforgettable experience.</p>
-            <button class="feature-btn">Learn More</button>
+            <h3>CARAVANS</h3>
+            <p>Experience the charm of repurposed caravans transformed into cozy and unique accommodations, where nostalgia meets luxury comfort in an unforgettable experience.</p>
           </div>
         </div>
         <div class="feature-card">
           <div class="feature-image">
-            <img src="/assets/room-3.jpeg" alt="Cruise Ship Bathroom" />
+            <img src="/assets/room-3.jpeg" alt="Caravan Room" />
           </div>
           <div class="feature-content">
-            <h3>CRUISE SHIP BATHROOM</h3>
-            <p>Experience maritime luxury in a repurposed Norwegian vessel captain's cabin, redesigned for ultimate comfort.</p>
-            <button class="feature-btn">Learn More</button>
+            <h3>CARAVAN ROOM</h3>
+            <p>Experience the charm of a repurposed caravan transformed into a cozy and unique accommodation, combining nostalgia with modern comfort.</p>
           </div>
         </div>
         <div class="feature-card">
           <div class="feature-image">
-            <img src="/assets/hotel-5.jpeg" alt="Historic Charm" />
+            <img src="/assets/minivan-2.jpeg" alt="Historic Charm" />
           </div>
           <div class="feature-content">
             <h3>HISTORIC CHARM</h3>
-            <p>Surrounded by authentic Assos stone walls, where ancient craftsmanship meets contemporary design.</p>
-            <button class="feature-btn">Learn More</button>
+            <p>A stonemason used stones (Assos stone) from a ruined stone house to build a perimeter wall, where ancient craftsmanship meets contemporary design.</p>
           </div>
         </div>
       </div>
@@ -220,10 +139,6 @@
         {#each galleryImages.slice(0, 6) as image, index}
           <div class="gallery-item" class:large={index === 0 || index === 3}>
             <img src={image.src} alt={image.title} />
-            <div class="gallery-overlay">
-              <h3>{image.title}</h3>
-              <p>{image.desc}</p>
-            </div>
           </div>
         {/each}
       </div>
@@ -244,7 +159,7 @@
               <div class="contact-icon">📍</div>
               <div>
                 <h3>Visit Us</h3>
-                <p>Kozlu Köyü, Ayvacık<br>17862 Çanakkale, Türkiye</p>
+                <p>Bebek Resort<br>Kozlu Köyü, Ayvacık<br>17862 Çanakkale, Türkiye</p>
               </div>
             </div>
             <div class="contact-item">
@@ -257,10 +172,7 @@
               </div>
             </div>
           </div>
-          <div class="contact-actions">
-            <button class="cta-primary full-width">Make a Reservation</button>
-            <button class="cta-secondary full-width">Download Brochure</button>
-          </div>
+
         </div>
         <div class="contact-visual">
           <img src="/assets/hotel-2.jpeg" alt="Resort location view" />
@@ -282,172 +194,6 @@
     overflow-x: hidden;
   }
 
-  /* Hero Section with Slider */
-  .hero {
-    position: relative;
-    height: 85vh;
-    overflow: hidden;
-  }
-
-  .hero-slider {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
-  .hero-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transition: opacity 2s ease-in-out;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .hero-slide.active {
-    opacity: 1;
-  }
-
-  .hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.6) 100%);
-    z-index: 1;
-  }
-
-  .hero-content {
-    text-align: center;
-    z-index: 2;
-    position: relative;
-    color: white;
-    max-width: 700px;
-    padding: 0 2rem;
-  }
-
-  .hero-content h1 {
-    font-size: clamp(2.5rem, 7vw, 5rem);
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.05em;
-    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    line-height: 1.1;
-  }
-
-  .tagline {
-    font-size: clamp(1rem, 2.5vw, 1.4rem);
-    margin-bottom: 3rem;
-    letter-spacing: 0.1em;
-    color: rgba(255, 255, 255, 0.9);
-    font-weight: 300;
-    line-height: 1.4;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .cta-primary, .cta-secondary {
-    padding: 1rem 2rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 4px;
-    min-width: 160px;
-  }
-
-  .cta-primary {
-    background: var(--primary-color);
-    color: white;
-    box-shadow: 0 4px 15px rgba(255, 30, 86, 0.3);
-  }
-
-  .cta-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 30, 86, 0.4);
-  }
-
-  .cta-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
-  }
-
-  .cta-secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-  }
-
-  /* Slider Controls */
-  .slider-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 3;
-    backdrop-filter: blur(10px);
-  }
-
-  .slider-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-50%) scale(1.05);
-  }
-
-  .slider-btn.prev {
-    left: 2rem;
-  }
-
-  .slider-btn.next {
-    right: 2rem;
-  }
-
-  .slide-indicators {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 0.8rem;
-    z-index: 3;
-  }
-
-  .indicator {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .indicator.active {
-    background: white;
-    border-color: white;
-  }
-
   /* Stats Section */
   .stats-section {
     background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
@@ -463,7 +209,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('/assets/hotel-5.jpeg') center/cover;
+    background: url('/assets/hotel-1.jpeg') center/cover;
     opacity: 0.1;
   }
 
@@ -665,22 +411,7 @@
     opacity: 0.9;
   }
 
-  .feature-btn {
-    background: transparent;
-    color: var(--accent-color);
-    border: 2px solid var(--accent-color);
-    padding: 0.8rem 2rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-  }
 
-  .feature-btn:hover {
-    background: var(--accent-color);
-    color: #000;
-  }
 
   /* Gallery Section */
   .gallery {
@@ -723,42 +454,9 @@
     transition: transform 0.5s ease;
   }
 
-  .gallery-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(255,30,86,0.8) 100%);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    padding: 2rem;
-    text-align: center;
-  }
-
   .gallery-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  }
-
-  .gallery-item:hover .gallery-overlay {
-    opacity: 1;
-  }
-
-  .gallery-overlay h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-  }
-
-  .gallery-overlay p {
-    font-size: 0.9rem;
-    opacity: 0.9;
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
   }
 
   /* Contact Section */
@@ -839,15 +537,7 @@
     color: var(--primary-color);
   }
 
-  .contact-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
 
-  .full-width {
-    width: 100%;
-  }
 
   .contact-visual {
     position: relative;
@@ -892,10 +582,7 @@
     transition: all 1s ease;
   }
 
-  .animate-on-scroll.animate-in {
-    opacity: 1;
-    transform: translateY(0);
-  }
+
 
   /* Responsive Design */
   @media (max-width: 1200px) {
@@ -909,28 +596,6 @@
   }
 
   @media (max-width: 768px) {
-    .hero-actions {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .cta-primary, .cta-secondary {
-      width: 250px;
-    }
-
-    .slider-btn {
-      width: 40px;
-      height: 40px;
-    }
-
-    .slider-btn.prev {
-      left: 1rem;
-    }
-
-    .slider-btn.next {
-      right: 1rem;
-    }
-
     .stats-container {
       grid-template-columns: 1fr;
       gap: 2rem;
@@ -945,7 +610,13 @@
     }
 
     .gallery-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .gallery-item.large {
+      grid-column: span 1;
+      grid-row: span 1;
     }
 
     .contact-grid {
@@ -954,16 +625,21 @@
   }
 
   @media (max-width: 480px) {
-    .hero-content {
-      padding: 0 1rem;
-    }
-
     .section-header h2 {
       font-size: 2rem;
     }
 
     .about-text {
       font-size: 1.1rem;
+    }
+
+    .gallery-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .gallery-content {
+      padding: 0 1rem;
     }
   }
 </style>

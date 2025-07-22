@@ -5,12 +5,12 @@
   let isLoaded = false;
   let currentSlide = 0;
   let transformationImages = [
-    { src: '/assets/minivan-2.jpeg', title: 'VINTAGE MINIBUSES', desc: 'Two decommissioned minibuses find new life as luxurious sleeping quarters, combining nostalgia with modern comfort.' },
-    { src: '/assets/room-2.jpeg', title: 'CRUISE SHIP ELEGANCE', desc: 'A Norwegian cruise ship\'s captain\'s cabin bathroom, meticulously redesigned for a unique hospitality experience.' },
-    { src: '/assets/hotel-3.jpeg', title: 'INDUSTRIAL CHIC', desc: 'A stainless steel industrial refrigerator transformed into a state-of-the-art laundry facility.' },
-    { src: '/assets/hotel-4.jpeg', title: 'HISTORIC CHARM', desc: 'Ancient Assos stones given new life in our modern walls.' },
-    { src: '/assets/minivan-3.jpeg', title: 'ARTISTIC VISION', desc: 'Where creativity meets sustainability in perfect harmony.' },
-    { src: '/assets/car-1.jpeg', title: 'AUTOMOTIVE ART', desc: 'Vintage vehicles transformed into functional art pieces.' }
+    { src: '/assets/minivan-2.jpeg', title: 'CARAVANS', desc: 'Repurposed caravans transformed into cozy and unique accommodation spaces.' },
+    { src: '/assets/room-2.jpeg', title: 'CARAVAN ROOM', desc: 'A repurposed caravan transformed into a cozy and unique accommodation space.' },
+    { src: '/assets/hotel-3.jpeg', title: 'INDUSTRIAL REFRIGERATOR', desc: 'A stainless steel industrial refrigerator was repurposed as a laundry room.' },
+    { src: '/assets/hotel-4.jpeg', title: 'ASSOS STONE WALLS', desc: 'A stonemason used stones (Assos stone) from a ruined stone house to build a perimeter wall.' },
+    { src: '/assets/minivan-3.jpeg', title: 'TELEPHONE POLES', desc: 'Old telephone poles were used in the roof construction.' },
+    { src: '/assets/car-1.jpeg', title: 'NAVAL OFFICER MANNEQUIN', desc: 'A secondhand mannequin representing a uniformed naval officer was placed in memory of the Gallipoli Campaign.' }
   ];
 
   let conceptVisible = false;
@@ -56,33 +56,19 @@
 </svelte:head>
 
 <div class="container">
-  <!-- Hero Section -->
-  <section class="hero" id="hero">
-    <div class="hero-content" in:fade={{ duration: 1000, delay: 500 }}>
-      <h1 in:fly={{ y: 50, duration: 1000, delay: 800 }}>UPCYCLING</h1>
-      <p class="tagline" in:fly={{ y: 30, duration: 1000, delay: 1000 }}>
-        TRANSFORMING THE ORDINARY INTO EXTRAORDINARY
-      </p>
-      <div class="hero-actions" in:fly={{ y: 30, duration: 1000, delay: 1200 }}>
-        <button class="cta-primary">Explore Transformations</button>
-        <button class="cta-secondary">Learn More</button>
-      </div>
-    </div>
-    <div class="hero-overlay"></div>
-    <div class="hero-bg" style="background-image: url('/assets/minivan-4.jpeg')"></div>
-  </section>
-
   <!-- Concept Section -->
   <section class="concept animate-on-scroll" id="concept">
     <div class="concept-content">
       <div class="section-header">
-        <h2>WHAT IS UPCYCLING?</h2>
-        <div class="divider"></div>
+        <h2>What is Upcycling?</h2>
+        <p class="section-subtitle">Discover the unique character of each carefully designed space</p>
       </div>
       <p class="concept-text">
-        Upcycling is the art of transforming old and unused products into valuable,
-        functional pieces with higher purpose. It's not just recycling - it's reimagining,
-        redesigning, and redefining the very essence of sustainability and creativity.
+        Upcycling is the process of transforming old and unused products or materials into more valuable and functional items.
+        This process often requires a creative and artistic approach. For example, creating a stylish lamp from an old wine bottle
+        or a new bag from a pair of old jeans are examples of upcycling. In this process, old products are often given a new life
+        with a higher value and sometimes take on a completely different function. Upcycling not only minimizes waste but also
+        benefits the environment by introducing new ideas in design and aesthetics.
       </p>
       <div class="concept-grid">
         <div class="concept-item" class:animate={conceptVisible}>
@@ -200,21 +186,21 @@
       <div class="benefits-grid">
         <div class="benefit-card">
           <div class="benefit-icon">🌍</div>
-          <h3>ENVIRONMENTAL IMPACT</h3>
-          <p>Every upcycled piece prevents waste from entering landfills and reduces the demand for new materials, contributing to a more sustainable future.</p>
+          <h3>REDUCING ENVIRONMENTAL IMPACT</h3>
+          <p>Reduces waste because old materials are reused, minimizing the environmental footprint and contributing to a more sustainable future.</p>
           <div class="benefit-stat">-75% Waste</div>
         </div>
         <div class="benefit-card">
-          <div class="benefit-icon">🏛️</div>
-          <h3>CULTURAL PRESERVATION</h3>
-          <p>We preserve local history and culture by giving new life to traditional materials and architectural elements from the region.</p>
-          <div class="benefit-stat">500+ Years</div>
+          <div class="benefit-icon">🎨</div>
+          <h3>STIMULATES CREATIVITY</h3>
+          <p>Opens up a diverse and creative avenue for designers and artists, allowing for innovative approaches to design and aesthetics.</p>
+          <div class="benefit-stat">∞ Creativity</div>
         </div>
         <div class="benefit-card">
-          <div class="benefit-icon">✨</div>
-          <h3>UNIQUE EXPERIENCES</h3>
-          <p>Each upcycled element tells a story, creating one-of-a-kind experiences that cannot be replicated anywhere else in the world.</p>
-          <div class="benefit-stat">100% Unique</div>
+          <div class="benefit-icon">💰</div>
+          <h3>ECONOMIC BENEFITS</h3>
+          <p>Old products or materials can be transformed into high-quality, unique products, generating additional income and value.</p>
+          <div class="benefit-stat">200% Value</div>
         </div>
       </div>
     </div>
@@ -254,7 +240,7 @@
         <button class="cta-secondary large">Schedule a Tour</button>
       </div>
     </div>
-    <div class="cta-bg" style="background-image: url('/assets/hotel-5.jpeg')"></div>
+    <div class="cta-bg" style="background-image: url('/assets/minivan-2.jpeg')"></div>
     <div class="cta-overlay"></div>
   </section>
 </div>
@@ -406,6 +392,13 @@
     font-weight: 900;
     margin-bottom: 1rem;
     letter-spacing: 0.1em;
+  }
+
+  .section-subtitle {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--accent-color);
+    margin-top: 0.5rem;
+    font-weight: 300;
   }
 
   .divider {
