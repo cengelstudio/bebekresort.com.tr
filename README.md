@@ -40,5 +40,5 @@ Kozlu Köyü, Ayvacık
 info@bebekresort.com.tr
 
 ## Logo Pack
-<img src="./public/logo-black.png" alt="Bebek Resort Black Logo" width="400" height="400" />
-<img src="./public/logo-white.png" alt="Bebek Resort White Logo" width="400" height="400" />
+<img src="./static/logo-black.png" alt="Bebek Resort Black Logo" width="400" height="400" />
+<img src="./static/logo-white.png" alt="Bebek Resort White Logo" width="400" height="400" />
