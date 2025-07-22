@@ -18,3 +18,21 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+    networks:
+      - bresort_network
+
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    ports:
+      - '80:80'
+    depends_on:
+      - bresort
+    restart: unless-stopped
+    networks:
+      - bresort_network
+
+networks:
+  bresort_network:
+    driver: bridge
