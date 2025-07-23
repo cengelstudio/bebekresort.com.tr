@@ -5,34 +5,36 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: bresort-app
     ports:
-      - '6778:6778'
+      - "6778:6778"
     environment:
       - NODE_ENV=production
       - PORT=6778
       - HOSTNAME=0.0.0.0
     restart: unless-stopped
     healthcheck:
-      test: ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:6778/']
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:6778/"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
     networks:
-      - bresort_network
+      - bresort-network
 
   nginx:
     build:
       context: ./nginx
       dockerfile: Dockerfile
+    container_name: bresort-nginx
     ports:
-      - '80:80'
+      - "80:80"
     depends_on:
       - bresort
     restart: unless-stopped
     networks:
-      - bresort_network
+      - bresort-network
 
 networks:
-  bresort_network:
+  bresort-network:
     driver: bridge

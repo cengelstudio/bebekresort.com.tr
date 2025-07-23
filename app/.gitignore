@@ -5,8 +5,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # Build outputs
-app/build
-app/.svelte-kit
+build
+.svelte-kit
 
 # Environment files
 .env
@@ -24,22 +24,6 @@ app/.svelte-kit
 # OS files
 .DS_Store
 Thumbs.db
-
-# Git
-.git
-
-# Documentation
-docs
-README.md
-LICENSE
-
-# Docker files
-Dockerfile
-docker-compose.yml
-.dockerignore
-
-# Deployment
-deploy.sh
 
 # Logs
 *.log
