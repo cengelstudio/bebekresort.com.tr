@@ -5,7 +5,7 @@ A modern, responsive website for Bebek Resort, showcasing unique accommodations 
 ## 🏗️ Project Structure
 
 ```
-bresort/
+bebekresort/
 ├── app/                    # Svelte application
 │   ├── src/               # Source code
 │   ├── static/            # Static assets
@@ -128,15 +128,6 @@ The nginx configuration includes:
 - SPA routing support
 - Health check endpoint
 
-## 📊 Monitoring
-
-### Health Check
-
-The application provides a health check endpoint:
-```
-GET /health
-```
-
 ### Logs
 
 View application logs:
@@ -187,24 +178,3 @@ yarn lint         # Run ESLint
 yarn format       # Format code with Prettier
 ```
 
-### Code Style
-
-- ESLint for code linting
-- Prettier for code formatting
-- TypeScript for type safety
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📞 Support
-
-For support and questions, please contact the development team.
