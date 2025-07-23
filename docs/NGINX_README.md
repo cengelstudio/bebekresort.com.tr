@@ -4,8 +4,8 @@ Bu proje, Svelte uygulamasını nginx reverse proxy ile birlikte çalıştırmak
 
 ## Yapı
 
-- **nginx.conf**: Ana nginx konfigürasyon dosyası
-- **nginx.Dockerfile**: Nginx container'ı için Dockerfile
+- **nginx/nginx.conf**: Ana nginx konfigürasyon dosyası
+- **nginx/Dockerfile**: Nginx container'ı için Dockerfile
 - **docker-compose.yml**: Hem Svelte uygulaması hem de nginx'i içeren compose dosyası
 
 ## Özellikler

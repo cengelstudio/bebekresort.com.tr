@@ -64,6 +64,9 @@
 		secondaryAction: () => scrollToSection('contact')
 	};
 
+	// Check if hero should be shown (hide on gallery page)
+	$: showHero = !$page.url.pathname.includes('/gallery');
+
 	function scrollToSection(id: string) {
 		const element = document.getElementById(id);
 		if (element) {
@@ -71,14 +74,29 @@
 		}
 	}
 
-	function toggleMenu() {
+			function toggleMenu() {
+		console.log('Toggle menu clicked, current state:', isMenuOpen);
 		isMenuOpen = !isMenuOpen;
 		isLangDropdownOpen = false; // Close lang dropdown when menu opens
+		console.log('New menu state:', isMenuOpen);
+
+		// Prevent body scroll when menu is open
+		if (typeof window !== 'undefined') {
+			const body = document.body;
+			if (isMenuOpen) {
+				body.style.overflow = 'hidden';
+				body.style.position = 'fixed';
+				body.style.width = '100%';
+			} else {
+				body.style.overflow = '';
+				body.style.position = '';
+				body.style.width = '';
+			}
+		}
 	}
 
 	function toggleLangDropdown() {
 		isLangDropdownOpen = !isLangDropdownOpen;
-		isMenuOpen = false; // Close menu when lang dropdown opens
 	}
 
 	function switchLanguage(lang: string) {
@@ -103,6 +121,13 @@
 	$: if ($page) {
 		isMenuOpen = false;
 		isLangDropdownOpen = false;
+		// Reset body styles when page changes
+		if (typeof window !== 'undefined') {
+			const body = document.body;
+			body.style.overflow = '';
+			body.style.position = '';
+			body.style.width = '';
+		}
 	}
 
 	onMount(() => {
@@ -112,6 +137,11 @@
 
 		return () => {
 			document.removeEventListener('click', handleClickOutside);
+			// Reset body styles on cleanup
+			const body = document.body;
+			body.style.overflow = '';
+			body.style.position = '';
+			body.style.width = '';
 		};
 	});
 </script>
@@ -229,7 +259,7 @@
 				<img src="/icons/logo-white.png" alt="Bebek Resort Logo" class="logo-img" />
 			</a>
 
-			<button class="menu-toggle" aria-label="Toggle menu" on:click={toggleMenu}>
+			<button class="menu-toggle {isMenuOpen ? 'open' : ''}" aria-label="Toggle menu" on:click={toggleMenu}>
 				<span class="menu-icon"></span>
 			</button>
 
@@ -239,6 +269,11 @@
 						href="/{currentLang}"
 						class="nav-link {$page.url.pathname === `/${currentLang}` ? 'active' : ''}"
 						>{t('nav.home')}</a
+					>
+					<a
+						href="/{currentLang}/gallery"
+						class="nav-link {$page.url.pathname === `/${currentLang}/gallery` ? 'active' : ''}"
+						>{t('nav.gallery')}</a
 					>
 					<a
 						href="/{currentLang}/upcycling"
@@ -276,24 +311,26 @@
 	</nav>
 
 	<!-- Hero Section -->
-	<section class="hero" id="hero">
-		<div class="hero-content" in:fade={{ duration: 1000, delay: 300 }}>
-			<h1 in:fly={{ y: 50, duration: 1000, delay: 500 }}>{heroContent.title}</h1>
-			<p class="tagline" in:fly={{ y: 30, duration: 1000, delay: 700 }}>
-				{heroContent.subtitle}
-			</p>
-			<div class="hero-actions" in:fly={{ y: 30, duration: 1000, delay: 900 }}>
-				<button class="cta-primary" on:click={heroContent.primaryAction}
-					>{heroContent.primaryBtn}</button
-				>
-				<button class="cta-secondary" on:click={heroContent.secondaryAction}
-					>{heroContent.secondaryBtn}</button
-				>
+	{#if showHero}
+		<section class="hero" id="hero">
+			<div class="hero-content" in:fade={{ duration: 1000, delay: 300 }}>
+				<h1 in:fly={{ y: 50, duration: 1000, delay: 500 }}>{heroContent.title}</h1>
+				<p class="tagline" in:fly={{ y: 30, duration: 1000, delay: 700 }}>
+					{heroContent.subtitle}
+				</p>
+				<div class="hero-actions" in:fly={{ y: 30, duration: 1000, delay: 900 }}>
+					<button class="cta-primary" on:click={heroContent.primaryAction}
+						>{heroContent.primaryBtn}</button
+					>
+					<button class="cta-secondary" on:click={heroContent.secondaryAction}
+						>{heroContent.secondaryBtn}</button
+					>
+				</div>
 			</div>
-		</div>
-		<div class="hero-overlay"></div>
-		<div class="hero-bg" style="background-image: url('/images/minivan-2.jpeg')"></div>
-	</section>
+			<div class="hero-overlay"></div>
+			<div class="hero-bg" style="background-image: url('/images/minivan-2.jpeg')"></div>
+		</section>
+	{/if}
 
 	<main>
 		<slot />
@@ -310,6 +347,7 @@
 				<div class="footer-section">
 					<h3>{t('footer.navigation')}</h3>
 					<a href="/{currentLang}">{t('nav.home')}</a>
+					<a href="/{currentLang}/gallery">{t('nav.gallery')}</a>
 					<a href="/{currentLang}/upcycling">{t('nav.upcycling')}</a>
 				</div>
 
@@ -560,7 +598,8 @@
 		cursor: pointer;
 		background: none;
 		border: none;
-		z-index: 1001;
+		z-index: 10000;
+		touch-action: manipulation;
 	}
 
 	.menu-icon,
@@ -588,6 +627,21 @@
 		bottom: -10px;
 	}
 
+	/* Hamburger animation when open */
+	.menu-toggle.open .menu-icon {
+		background: transparent;
+	}
+
+	.menu-toggle.open .menu-icon::before {
+		transform: rotate(45deg);
+		top: 0;
+	}
+
+	.menu-toggle.open .menu-icon::after {
+		transform: rotate(-45deg);
+		bottom: 0;
+	}
+
 	main {
 		min-height: 100vh;
 	}
@@ -597,6 +651,8 @@
 			padding-top: 90px;
 		}
 	}
+
+	/* Gallery page specific styles - moved to gallery page for better scoping */
 
 	footer {
 		background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
@@ -898,44 +954,142 @@
 	}
 
 	@media (max-width: 768px) {
+		.main-nav {
+			padding: 1rem;
+			height: auto;
+		}
+
+		.logo-container {
+			order: 1;
+		}
+
+		.nav-content {
+			position: relative;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+		}
+
 		.menu-toggle {
-			display: block;
+			display: block !important;
+			position: relative;
+			z-index: 10000;
+			order: 2;
 		}
 
 		.nav-items {
 			position: fixed;
-			top: 90px;
+			top: 0;
 			left: 0;
-			right: 0;
-			background: rgba(0, 0, 0, 0.98);
+			width: 100vw;
+			height: 100vh;
+			background: rgba(0, 0, 0, 0.95);
 			backdrop-filter: blur(20px);
-			padding: 3rem 2rem;
+			display: flex;
 			flex-direction: column;
-			gap: 3rem;
-			transform: translateY(-100%);
+			justify-content: center;
+			align-items: center;
+			gap: 1.5rem;
+			padding: 2rem 1rem;
+			box-sizing: border-box;
+			visibility: hidden;
 			opacity: 0;
-			transition: all 0.4s ease;
-			border-top: 1px solid rgba(255, 255, 255, 0.1);
+			transform: scale(0.9);
+			transition: all 0.3s ease;
+			z-index: 9998;
 		}
 
 		.nav-items.open {
-			transform: translateY(0);
+			visibility: visible;
 			opacity: 1;
+			transform: scale(1);
 		}
 
 		.nav-links {
+			display: flex;
 			flex-direction: column;
 			align-items: center;
 			gap: 2rem;
+			width: 100%;
 		}
 
 		.nav-link {
-			font-size: 1.2rem;
-			padding: 1.5rem 0;
+			font-size: 1.8rem;
+			font-weight: 700;
+			padding: 1rem 1.5rem;
+			color: white;
+			text-decoration: none;
+			border: 2px solid transparent;
+			border-radius: 10px;
+			transition: all 0.3s ease;
+			min-width: 180px;
+			max-width: 250px;
+			text-align: center;
+		}
+
+		.nav-link:hover,
+		.nav-link.active {
+			border-color: var(--primary-color);
+			background: rgba(255, 30, 86, 0.1);
+			color: var(--primary-color);
 		}
 
 		.lang-selector {
-			padding: 1rem;
+			margin-top: 1.5rem;
+			width: auto;
+			max-width: 200px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.lang-current {
+			padding: 0.8rem 1.5rem;
+			font-size: 1rem;
+			min-width: 100px;
+			max-width: 150px;
+			justify-content: center;
+			margin: 0 auto;
+		}
+
+		.lang-dropdown {
+			position: static;
+			width: 150px;
+			max-width: 90vw;
+			margin: 1rem auto 0;
+			background: rgba(255, 255, 255, 0.1);
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			border-radius: 10px;
+			visibility: visible;
+			opacity: 1;
+			transform: none;
+			padding: 0.5rem 0;
+		}
+
+		.lang-dropdown.open {
+			display: block;
+		}
+
+		.lang-dropdown:not(.open) {
+			display: none;
+		}
+
+		.lang-option {
+			padding: 0.8rem 1rem;
+			font-size: 0.9rem;
+			text-align: center;
+			width: 100%;
+			color: white;
+			background: transparent;
+			border: none;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.lang-option:hover {
+			background: rgba(255, 30, 86, 0.2);
+			color: var(--primary-color);
 		}
 
 		.footer-bottom {
@@ -959,6 +1113,30 @@
 
 		.logo-container {
 			width: 70px;
+		}
+
+		.nav-link {
+			font-size: 1.5rem;
+			padding: 0.8rem 1rem;
+			min-width: 150px;
+			max-width: 200px;
+		}
+
+		.lang-current {
+			padding: 0.6rem 1rem;
+			font-size: 0.9rem;
+			min-width: 80px;
+			max-width: 120px;
+		}
+
+		.lang-dropdown {
+			width: 120px;
+			max-width: 80vw;
+		}
+
+		.lang-option {
+			padding: 0.6rem 0.8rem;
+			font-size: 0.8rem;
 		}
 
 		.footer-grid {

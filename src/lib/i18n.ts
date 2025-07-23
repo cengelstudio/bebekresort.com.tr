@@ -14,31 +14,25 @@ export async function loadTranslation(locale: Locale, fetchFn?: typeof fetch): P
 		// Use provided fetch function or fallback to global fetch
 		const fetchToUse = fetchFn || (typeof window !== 'undefined' ? fetch : undefined);
 
-		if (!fetchToUse) {
-			// For SSR without fetch, try to import the JSON directly
-			try {
-				const translations = await import(`../../../static/messages/${locale}.json`);
-				translationCache[locale] = translations.default;
-				return translations.default;
-			} catch (importError) {
-				console.error(`Error importing ${locale} translations:`, importError);
-				return {};
+		if (fetchToUse) {
+			// Try to fetch from the static messages directory
+			const response = await fetchToUse(`/messages/${locale}.json`, {
+				headers: {
+					Accept: 'application/json'
+				}
+			});
+
+			if (response.ok) {
+				const translations = await response.json();
+				translationCache[locale] = translations;
+				return translations;
 			}
 		}
 
-		// For SSR, we need to load from the static messages directory
-		// Use relative path to avoid SSL issues
-		const response = await fetchToUse(`/messages/${locale}.json`, {
-			headers: {
-				Accept: 'application/json'
-			}
-		});
-		if (!response.ok) {
-			throw new Error(`Failed to load ${locale} translations: ${response.status}`);
-		}
-		const translations = await response.json();
-		translationCache[locale] = translations;
-		return translations;
+		// If fetch is not available or failed, return empty object
+		// This will trigger fallback to English
+		console.warn(`Could not load translations for locale: ${locale}`);
+		return {};
 	} catch (error) {
 		console.error(`Error loading ${locale} translations:`, error);
 		// Fallback to English

@@ -1,6 +1,7 @@
 {
   "nav": {
     "home": "Home",
+    "gallery": "Gallery",
     "upcycling": "Upcycling"
   },
   "hero": {
@@ -49,7 +50,24 @@
   },
   "gallery": {
     "title": "Our Spaces",
-    "subtitle": "Discover the unique character of each carefully designed space"
+    "subtitle": "Discover the unique character of each carefully designed space",
+    "hero": {
+      "title": "PHOTO GALLERY",
+      "subtitle": "Explore the beauty and uniqueness of Bebek Resort through our curated collection of images"
+    },
+    "categories": {
+      "all": "All Photos",
+      "hotel": "Hotel",
+      "room": "Rooms",
+      "minivan": "Minivans",
+      "car": "Cars",
+      "sea": "Views"
+    },
+    "cta": {
+      "title": "Ready to Experience It Yourself?",
+      "subtitle": "Book your stay and create unforgettable memories at Bebek Resort",
+      "button": "Book Now"
+    }
   },
   "contact": {
     "title": "Reserve Your Escape",

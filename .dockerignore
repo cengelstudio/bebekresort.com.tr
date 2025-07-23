@@ -8,3 +8,5 @@ README.md
 coverage
 .DS_Store
 *.log
+# Nginx files are handled separately
+nginx/

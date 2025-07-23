@@ -1,6 +1,7 @@
 {
   "nav": {
     "home": "Ana Sayfa",
+    "gallery": "Galeri",
     "upcycling": "Upcycling"
   },
   "hero": {
@@ -49,7 +50,24 @@
   },
   "gallery": {
     "title": "Mekanlarımız",
-    "subtitle": "Her özenle tasarlanmış mekanın benzersiz karakterini keşfedin"
+    "subtitle": "Her özenle tasarlanmış mekanın benzersiz karakterini keşfedin",
+    "hero": {
+      "title": "FOTOĞRAF GALERİSİ",
+      "subtitle": "Özenle seçilmiş görsel koleksiyonumuz aracılığıyla Bebek Resort'un güzelliğini ve benzersizliğini keşfedin"
+    },
+    "categories": {
+      "all": "Tüm Fotoğraflar",
+      "hotel": "Otel",
+      "room": "Odalar",
+      "minivan": "Minivanlar",
+      "car": "Arabalar",
+      "sea": "Manzaralar"
+    },
+    "cta": {
+      "title": "Kendiniz Deneyimlemeye Hazır mısınız?",
+      "subtitle": "Bebek Resort'ta konaklamanızı rezerve edin ve unutulmaz anılar yaratın",
+      "button": "Şimdi Rezerve Et"
+    }
   },
   "contact": {
     "title": "Kaçamağınızı Rezerve Edin",
